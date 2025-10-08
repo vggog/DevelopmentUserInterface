@@ -25,14 +25,14 @@ header .container {
     margin: 0 auto;
     padding: 30px;
 }
-.new-task-card {
+.create-task-card {
     background-color: white;
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 30px;
     width: 30rem;
 }
-.new-task-card h2 {
+.create-task-card h2 {
     font-size: 1.8rem;
     margin-bottom: 16px;
     font-weight: 600;
@@ -67,7 +67,7 @@ header .container {
     gap: 8px;
 }
 
-.columns {
+.create-task-card {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;

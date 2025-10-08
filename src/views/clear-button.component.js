@@ -1,19 +1,18 @@
 import {createElement} from '../framework/render.js';
 
-function taskItemComponentTemplate(task) {
+
+function clearButtonComponentTemplate() {
     return (
-        `<li class="task-item">${task.title}</li>`
+        `<button class="clear-button">
+            Очистить
+        </button>`
     );
 }
 
-export default class TaskItemComponent {
-
-    constructor(task) {
-        this.task = task;
-    }
+export default class ClearButtonComponent {
 
     getTemplate() {
-        return taskItemComponentTemplate(this.task);
+        return clearButtonComponentTemplate();
     }
 
     getElement() {

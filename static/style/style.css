@@ -17,6 +17,7 @@ header {
     text-align: left;
 }
 header .container {
+    font-size: 2.5rem;
     padding: 0 30px;
 }
 
@@ -67,7 +68,7 @@ header .container {
     gap: 8px;
 }
 
-.create-task-card {
+.board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -114,10 +115,10 @@ header .container {
 .in-progress-column .task-item {
     border-left: 6px solid #d8e6ff;
 }
-.ready-column .task-item {
+.done-column .task-item {
     border-left: 6px solid #e6f7e6;
 }
-.trasher-column .task-item {
+.trash-column .task-item {
     border-left: 6px solid #ffe6e6;
 }
 

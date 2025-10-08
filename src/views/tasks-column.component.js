@@ -1,10 +1,10 @@
 import {createElement} from '../framework/render.js';
 
 
-function tasksColumnComponentTemplate() {
+function tasksColumnComponentTemplate(typeTask, nameTask) {
     return (
-        `<div class="backlog-columns">
-            <div class="column-header backlog">Бэклог</div>
+        `<div class="${typeTask}-columns">
+            <div class="column-header ${typeTask}">${nameTask}</div>
             <ul class="task-list">
             
             </ul>
@@ -14,10 +14,15 @@ function tasksColumnComponentTemplate() {
 
 
 export default class TasksColumnComponent {
-    getTemplate() {
-        return tasksColumnComponentTemplate();
+
+    constructor(typeTask,nameTask) {
+        this.typeTask = typeTask;
+        this.nameTask = nameTask;
     }
 
+    getTemplate() {
+        return tasksColumnComponentTemplate(this.typeTask, this.nameTask);
+    }
 
     getElement() {
         if (!this.element) {

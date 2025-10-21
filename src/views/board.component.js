@@ -1,4 +1,4 @@
-import {createElement} from "../framework/render.js";
+import {AbstractComponent} from "../framework/view/abstract.component.js";
 
 function boardComponentTemplate() {
     return (
@@ -8,21 +8,9 @@ function boardComponentTemplate() {
     );
 }
 
-export default class BoardComponent {
+export default class BoardComponent extends AbstractComponent {
 
-    getTemplate() {
+    get template() {
         return boardComponentTemplate();
-    }
-
-    getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
-        }
-
-        return this.element;
-    }
-
-    removeElement() {
-        this.element = null;
     }
 }

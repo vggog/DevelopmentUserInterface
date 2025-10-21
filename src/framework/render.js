@@ -1,3 +1,5 @@
+import {AbstractComponent} from "./view/abstract.component.js";
+
 const RenderPosition = {
     BEFOREBEGIN: 'beforebegin',
     AFTERBEGIN: 'afterbegin',
@@ -16,7 +18,15 @@ function createElement(template) {
 
 
 function render(component, container, place = RenderPosition.BEFOREEND) {
-    container.insertAdjacentElement(place, component.getElement());
+
+    if (!(component instanceof AbstractComponent)){
+        throw new Error('Component must be an instance of AbstractComponent');
+    }
+    if (container == null){
+        throw new Error('Container must be defined');
+    }
+
+    container.insertAdjacentElement(place, component.element);
 }
 
 

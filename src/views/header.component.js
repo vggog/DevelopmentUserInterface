@@ -1,4 +1,4 @@
-import {createElement} from "../framework/render.js";
+import {AbstractComponent} from "../framework/view/abstract.component.js";
 
 
 function headerComponentTemplate() {
@@ -10,21 +10,9 @@ function headerComponentTemplate() {
 }
 
 
-export default class HeaderComponent {
-    getTemplate() {
+export default class HeaderComponent extends AbstractComponent {
+
+    get template() {
         return headerComponentTemplate();
-    }
-
-    getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
-        }
-
-        return this.element;
-    }
-
-
-    removeElement() {
-        this.element = null;
     }
 }

@@ -1,4 +1,4 @@
-import {createElement} from '../framework/render.js';
+import {AbstractComponent} from "../framework/view/abstract.component.js";
 
 
 function clearButtonComponentTemplate() {
@@ -9,21 +9,10 @@ function clearButtonComponentTemplate() {
     );
 }
 
-export default class ClearButtonComponent {
+export default class ClearButtonComponent extends AbstractComponent {
 
-    getTemplate() {
+    get template() {
         return clearButtonComponentTemplate();
     }
 
-    getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
-        }
-
-        return this.element;
-    }
-
-    removeElement() {
-        this.element = null;
-    }
 }

@@ -24,16 +24,16 @@ export const tasks = [
         title: "Попить воды",
         status: "in-progress",
     },
-    {
-        id: 6,
-        title: "Позвонить маме",
-        status: "done",
-    },
-    {
-        id: 7,
-        title: "Погладить кота",
-        status: "done",
-    },
+    // {
+    //     id: 6,
+    //     title: "Позвонить маме",
+    //     status: "done",
+    // },
+    // {
+    //     id: 7,
+    //     title: "Погладить кота",
+    //     status: "done",
+    // },
     {
         id: 8,
         title: "Сходить погулять",

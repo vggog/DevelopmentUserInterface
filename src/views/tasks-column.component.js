@@ -1,4 +1,4 @@
-import {createElement} from '../framework/render.js';
+import {AbstractComponent} from "../framework/view/abstract.component.js";
 
 
 function tasksColumnComponentTemplate(typeTask, nameTask) {
@@ -13,28 +13,15 @@ function tasksColumnComponentTemplate(typeTask, nameTask) {
 }
 
 
-export default class TasksColumnComponent {
+export default class TasksColumnComponent extends AbstractComponent {
 
     constructor(typeTask,nameTask) {
+        super()
         this.typeTask = typeTask;
         this.nameTask = nameTask;
     }
 
-    getTemplate() {
+    get template() {
         return tasksColumnComponentTemplate(this.typeTask, this.nameTask);
-    }
-
-    getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
-        }
-
-
-        return this.element;
-    }
-
-
-    removeElement() {
-        this.element = null;
     }
 }

@@ -13,12 +13,15 @@ export default class TaskBoardPresenter {
 
     #boardContainer=null;
     #tasksModel=null;
-    #boardTasks=[]
+
+    get tasks() {
+        return this.#tasksModel.tasks;
+    }
 
     constructor (boardContainer, tasksModel) {
         this.#boardContainer=boardContainer;
         this.#tasksModel=tasksModel;
-        this.#boardTasks=[...this.#tasksModel.tasks];
+        this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
     }
 
     init(){
@@ -26,12 +29,27 @@ export default class TaskBoardPresenter {
         this.#renderTasksList(this.#tasksBoardComponent.element)
     }
 
+    createTask() {
+        const taskTitle = document.querySelector('#add-task').value.trim();
+        if (!taskTitle) {
+            return;
+        }
+
+        this.#tasksModel.addTask(taskTitle);
+        document.querySelector('#add-task').value = '';
+    }
+
+    deleteTrash() {
+        console.log("trash");
+        this.#tasksModel.deleteItems();
+    }
+
     #renderTasksList(container) {
         for (let i=0; i < status.length; i++) {
             const taskTableComponent=new TasksColumnComponent(status[i], statusLabel[status[i]]);
             render(taskTableComponent,container);
 
-            let filterTaskList=this.#boardTasks.filter(task => task.status === status[i]);
+            let filterTaskList=this.tasks.filter(task => task.status === status[i]);
             if (filterTaskList.length === 0) {
                 this.#renderRawTask(taskTableComponent.element.querySelector("ul"));
                 continue;
@@ -42,7 +60,9 @@ export default class TaskBoardPresenter {
             }
 
             if(status[i] === "trash") {
-                this.#renderClearButton(taskTableComponent.element);
+                this.#renderClearButton(
+                    taskTableComponent.element,
+                );
             }
         }
     }
@@ -57,8 +77,19 @@ export default class TaskBoardPresenter {
         render(rawComponent, container);
     }
 
-    #renderClearButton(container) {
-        const clearButtonComponent = new ClearButtonComponent();
+    #renderClearButton(container, countOfElementsInTrash) {
+        const clearButtonComponent = new ClearButtonComponent({
+            onClick: () => this.deleteTrash(),
+        });
         render(clearButtonComponent, container);
+    }
+
+    #handleModelChange() {
+        this.#clearBoard();
+        this.#renderTasksList(this.#tasksBoardComponent.element)
+    }
+
+    #clearBoard() {
+        this.#tasksBoardComponent.element.innerHTML = '';
     }
 }

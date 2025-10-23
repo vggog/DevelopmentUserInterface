@@ -12,16 +12,42 @@ function tasksColumnComponentTemplate(typeTask, nameTask) {
     );
 }
 
+const status = ["backlog", "in-progress", "done", "trash"];
+
 
 export default class TasksColumnComponent extends AbstractComponent {
 
-    constructor(typeTask,nameTask) {
+    def = 5;
+
+    constructor({typeTask, nameTask, onTaskDrop}) {
         super()
         this.typeTask = typeTask;
         this.nameTask = nameTask;
+
+        this.#setDropHandler(onTaskDrop);
     }
 
     get template() {
         return tasksColumnComponentTemplate(this.typeTask, this.nameTask);
+    }
+
+    #setDropHandler(onTaskDrop) {
+
+        console.log(status);
+        const container = this.element;
+
+        container.addEventListener('dragover', (event) => {
+            event.preventDefault();
+        });
+
+        container.addEventListener('drop', (event) => {
+            event.preventDefault();
+
+            onTaskDrop(
+                {
+                    taskId: event.dataTransfer.getData('text/plain'),
+                    preferId: localStorage.getItem('preferId'),
+                    newStatus: this.typeTask});
+        });
     }
 }

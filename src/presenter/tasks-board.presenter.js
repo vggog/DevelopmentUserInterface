@@ -6,6 +6,7 @@ import {statusLabel} from "../constants/status-label.js";
 import TasksColumnComponent from "../views/tasks-column.component.js";
 import ClearButtonComponent from "../views/clear-button.component.js";
 import RawComponent from "../views/raw.component.js";
+import LoadingViewControllerComponent from "../views/loading.component.js";
 
 
 export default class TaskBoardPresenter {
@@ -24,24 +25,36 @@ export default class TaskBoardPresenter {
         this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
     }
 
-    init(){
+    async init(){
         render(this.#tasksBoardComponent, this.#boardContainer);
-        this.#renderTasksList(this.#tasksBoardComponent.element)
+
+        const loadingComponent = new LoadingViewControllerComponent();
+        render(loadingComponent, this.#tasksBoardComponent.element);
+
+        await this.#tasksModel.init();
+
+        loadingComponent.element.remove();
     }
 
-    createTask() {
+    async createTask() {
         const taskTitle = document.querySelector('#add-task').value.trim();
         if (!taskTitle) {
             return;
         }
-
-        this.#tasksModel.addTask(taskTitle);
-        document.querySelector('#add-task').value = '';
+        try {
+            await this.#tasksModel.addTask(taskTitle);
+            document.querySelector('#add-task').value = "";
+        } catch (err) {
+            console.error('Ошибка при создании задачи:', err);
+        }
     }
 
-    deleteTrash() {
-        console.log("trash");
-        this.#tasksModel.deleteItems();
+    async deleteTrash() {
+        try {
+            await this.#tasksModel.clearBasketTasks();
+        } catch (err) {
+            console.error("Ошибка при очистке корзины:", err)
+        }
     }
 
     #renderTasksList(container) {
@@ -96,7 +109,11 @@ export default class TaskBoardPresenter {
         this.#tasksBoardComponent.element.innerHTML = '';
     }
 
-    #handleTaskDrop({taskId, preferId, newStatus}) {
-        this.#tasksModel.updateTaskStatus({taskId, preferId, newStatus});
+    async #handleTaskDrop({taskId, preferId, newStatus}) {
+        try {
+            await this.#tasksModel.updateTaskStatus({taskId, preferId, newStatus});
+        } catch (err) {
+            console.error("Ошибка при обновление статуса задачи:", err)
+        }
     }
 }

@@ -33,7 +33,6 @@ export default class TasksColumnComponent extends AbstractComponent {
 
     #setDropHandler(onTaskDrop) {
 
-        console.log(status);
         const container = this.element;
 
         container.addEventListener('dragover', (event) => {
